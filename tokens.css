@@ -1,0 +1,124 @@
+/* tokens.css — ThenAndNow · brand-locked · Hallmark custom theme
+ * Hallmark · genre: editorial · macrostructure: Long Document · theme: custom (brand-locked)
+ * source: ThenAndNow PRD §6 design system + ui-final.html:8 font stack
+ * paper: oklch(98% 0.012 90) ≈ cream #faf9f5
+ * accent: oklch(63.8% 0.13 42) ≈ coral #cc785c
+ * display+body: Geist · mono: Geist Mono
+ * paper-band: light · display-style: geometric-sans (Vercel) · accent-hue: warm
+ */
+
+:root {
+  /* ─── color · paper / surfaces ─── */
+  --color-paper: oklch(98% 0.012 90);          /* canvas #faf9f5 */
+  --color-paper-2: oklch(96% 0.018 85);        /* surface soft #f5f0e8 */
+  --color-paper-3: oklch(94% 0.022 85);        /* surface card #efe9de */
+  --color-paper-4: oklch(91% 0.025 80);       /* hairline solid #e6dfd8 */
+  --color-paper-5: oklch(96% 0.015 80);       /* hover lift */
+  --color-paper-dark: oklch(18% 0.005 90);    /* surface dark #181715 (for mode-preview) */
+
+  /* ─── color · ink ─── */
+  --color-ink: oklch(20% 0.005 60);            /* ink #141413 */
+  --color-ink-2: oklch(34% 0.005 60);         /* body #3d3d3a */
+  --color-ink-3: oklch(50% 0.008 70);         /* muted #6c6a64 */
+  --color-ink-4: oklch(70% 0.012 80);         /* faint #8e8b82 */
+
+  /* ─── color · accent (coral, restrained) ─── */
+  --color-accent: oklch(63.8% 0.13 42);       /* coral #cc785c */
+  --color-accent-hover: oklch(56% 0.13 38);   /* coral active #a9583e */
+  --color-accent-soft: oklch(63.8% 0.13 42 / 0.08);
+  --color-accent-glow: oklch(63.8% 0.13 42 / 0.18);
+
+  /* ─── color · semantic ─── */
+  --color-focus: oklch(63.8% 0.13 42);
+  --color-success: oklch(58% 0.12 145);
+  --color-warning: oklch(70% 0.13 70);
+
+  /* ─── typography · font stacks ─── */
+  --font-display: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-body: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "SF Mono", ui-monospace, "Menlo", monospace;
+
+  /* ─── typography · scale (4pt ratio, tightened for editorial) ─── */
+  --text-xs: 11px;
+  --text-sm: 13px;
+  --text-base: 15px;
+  --text-md: 17px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 32px;
+  --text-3xl: 40px;
+  --text-4xl: 56px;
+  --text-display: clamp(2.5rem, 6vw, 4.5rem);
+  --text-display-s: clamp(2rem, 4.5vw, 3rem);
+
+  /* ─── typography · tracking ─── */
+  --tracking-tight: -0.04em;     /* display + title negative tracking */
+  --tracking-snug: -0.025em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.015em;      /* body small */
+  --tracking-mono: 0.04em;       /* mono eyebrow */
+  --tracking-mono-cap: 0.08em;
+
+  /* ─── typography · leading ─── */
+  --leading-tight: 1.05;         /* display */
+  --leading-snug: 1.2;           /* title */
+  --leading-normal: 1.5;         /* body */
+  --leading-relaxed: 1.65;       /* editorial essay */
+
+  /* ─── spacing · 4pt scale ─── */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-9: 56px;
+  --space-10: 72px;
+  --space-11: 96px;
+  --space-12: 128px;
+  --space-13: 168px;
+
+  /* ─── layout · measure (editorial reading width) ─── */
+  --measure: 62ch;
+  --measure-wide: 76ch;
+  --measure-display: 18ch;
+  --container: 1240px;
+  --container-narrow: 880px;
+
+  /* ─── rule / radius ─── */
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-pill: 9999px;
+
+  /* ─── shadow · minimal (per PRD: no shadows, surface color contrast only) ─── */
+  --shadow-flat: 0 0 0 0 transparent;
+  --shadow-soft: 0 1px 2px oklch(20% 0.005 60 / 0.04);
+  --shadow-pop: 0 8px 24px -8px oklch(20% 0.005 60 / 0.12);
+
+  /* ─── motion · easings (Apple §4) ─── */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in: cubic-bezier(0.55, 0, 1, 0.45);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-snap: cubic-bezier(0.5, 0, 0, 1);
+
+  /* ─── motion · durations (Apple §4 + editorial breath) ─── */
+  --dur-instant: 80ms;
+  --dur-fast: 160ms;
+  --dur-base: 240ms;
+  --dur-slow: 420ms;
+  --dur-cinema: 680ms;
+  --dur-essay: 900ms;
+
+  /* ─── z-index ─── */
+  --z-nav: 50;
+  --z-modal: 100;
+  --z-toast: 200;
+
+  /* ─── reduced motion (overrides) ─── */
+  --dur-reduced: 0ms;
+}
