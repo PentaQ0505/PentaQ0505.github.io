@@ -3,708 +3,260 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>Then & Now — A privacy-first iOS tool for comparing moments.</title>
-  <meta name="description" content="Then & Now is an iOS app for before-and-after photo comparison. Local-first. No cloud. No tracking. Auto-aligns when you ask, leaves your manual edits alone when you don't.">
-
-  <!-- Open Graph -->
-  <meta property="og:title" content="Then & Now — Compare moments. Privately.">
-  <meta property="og:description" content="A privacy-first iOS tool for the moments worth comparing.">
+  <title>Then & Now — Every change, side by side.</title>
+  <meta name="description" content="Compare before and after photos, recreate the same shot, and turn change into a video. Private by design, on iPhone.">
+  <meta property="og:title" content="Then & Now — Every change, side by side.">
+  <meta property="og:description" content="A private, beautifully simple way to compare moments on iPhone.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pentaq0505.github.io/">
-
-  <!-- Fonts · brand-locked: Geist + Geist Mono (per PRD §6.2) -->
+  <meta property="og:image" content="https://pentaq0505.github.io/assets/app-icon.png">
+  <link rel="icon" type="image/png" href="assets/app-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-  <!-- Hallmark custom theme · brand-locked cream/coral/Geist -->
-  <link rel="stylesheet" href="tokens.css?v=20261026">
-  <link rel="stylesheet" href="styles.css?v=20261026">
-
-  <!-- Motion library · vanilla bundle via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/motion@11.13.1/dist/motion.js" defer></script>
-  <script src="script.js?v=20261026" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/compare-before.jpg">
+  <link rel="preload" as="image" href="assets/compare-after.jpg">
+  <link rel="stylesheet" href="tokens.css?v=20261027">
+  <link rel="stylesheet" href="styles.css?v=20261027">
+  <script>
+    try {
+      window.__initialLocale = new URLSearchParams(location.search).get('lang') ||
+        (localStorage.getItem('thenandnow.locale') || (navigator.language.startsWith('zh') ? 'zh-Hans' : 'en'));
+    } catch (_) {
+      window.__initialLocale = navigator.language.startsWith('zh') ? 'zh-Hans' : 'en';
+    }
+  </script>
+  <script src="script.js?v=20261027" defer></script>
 </head>
 <body>
+  <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
 
-  <!-- ─────────────────────────────────────────────────
-       NAV · N1b canonical 3-section
-       ───────────────────────────────────────────────── -->
-  <header class="nav" role="banner">
-    <div class="nav__inner">
-      <a href="#top" class="nav__brand" aria-label="Then & Now home">
-        <span>Then &amp; Now<span class="period">.</span></span>
-        <span class="nav__brand-meta">v1.0 · ios</span>
+  <header class="site-header">
+    <div class="nav-shell">
+      <a class="brand" href="#top" aria-label="Then & Now home">
+        <img src="assets/app-icon.png" width="40" height="40" alt="" class="brand__icon">
+        <span>Then &amp; Now<span class="text-accent">.</span></span>
       </a>
-
-      <nav class="nav__links" aria-label="Primary">
-        <a href="#why">Why</a>
-        <a href="#demo">Demo</a>
-        <a href="#features">Features</a>
-        <a href="#privacy">Privacy</a>
-        <a href="#faq">FAQ</a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#demo" data-i18n="nav.demo">Demo</a>
+        <a href="#features" data-i18n="nav.features">Features</a>
+        <a href="#privacy" data-i18n="nav.privacy">Privacy</a>
+        <a href="#faq" data-i18n="nav.faq">FAQ</a>
       </nav>
-
-      <a href="#download" class="nav__cta">
-        Get the app
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </a>
+      <div class="nav-actions">
+        <div class="locale-switch" role="group" aria-label="Language / 语言">
+          <button type="button" data-locale="zh-Hans" aria-pressed="false">中文</button>
+          <span aria-hidden="true">/</span>
+          <button type="button" data-locale="en" aria-pressed="true">EN</button>
+        </div>
+        <a class="button button--small button--dark" href="#download" data-i18n="nav.cta">Get the app</a>
+      </div>
     </div>
   </header>
 
-  <!-- ─────────────────────────────────────────────────
-       HERO · cinematic opener
-       ───────────────────────────────────────────────── -->
-  <section class="hero" id="top">
-    <div class="hero__bg" aria-hidden="true"></div>
-
-    <div class="hero__inner">
-      <div class="hero__eyebrow" data-reveal>
-        <span class="dot" aria-hidden="true"></span>
-        <span>~/thenandnow · coming soon on ios</span>
+  <main id="main">
+    <section class="hero section-shell" id="top">
+      <div class="hero__copy" data-reveal>
+        <div class="eyebrow"><span class="status-dot"></span><span data-i18n="hero.eyebrow">A quiet tool for visible change</span></div>
+        <h1>
+          <span data-i18n="hero.title1">Every change,</span><br>
+          <span class="text-accent" data-i18n="hero.title2">side by side.</span>
+        </h1>
+        <p class="hero__lede" data-i18n="hero.lede">Compare before and after photos, recreate the same shot, and turn change into a video. Beautifully simple. Private by design.</p>
+        <div class="hero__actions">
+          <a class="button button--accent" href="#demo"><span data-i18n="hero.primary">Try the comparison</span><span aria-hidden="true">↘</span></a>
+          <a class="text-link" href="#features" data-i18n="hero.secondary">Explore the app</a>
+        </div>
+        <div class="hero__facts" aria-label="Product details">
+          <span>iOS 17+</span><span data-i18n="hero.fact1">Core features free</span><span data-i18n="hero.fact2">No account</span>
+        </div>
       </div>
 
-      <h1 class="hero__display" data-reveal data-reveal-delay="1">
-        Before<span class="period">.</span> After<span class="period">.</span><br>
-        And the rare <span class="accent">in&#8209;between</span><span class="period">.</span>
-      </h1>
-
-      <p class="hero__sub" data-reveal data-reveal-delay="2">
-        A privacy-first iOS tool for the moments worth comparing. Photos never leave the device. Auto-align runs only when you tap the button — and never overwrites what you've arranged by hand.
-      </p>
-
-      <div class="hero__ctas" data-reveal data-reveal-delay="3">
-        <a href="#download" class="btn-primary">
-          Get Then &amp; Now
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-        </a>
-        <a href="#why" class="btn-ghost">Read the editor's letter ↓</a>
-      </div>
-    </div>
-
-    <div class="hero__meta" aria-hidden="true">
-      <span>iOS 17 · iPhone · free to try</span>
-      <span class="scroll-hint">scroll</span>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 01 — ESSAY · editor's letter
-       ───────────────────────────────────────────────── -->
-  <section class="section section--narrow" id="why">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 01</span>
-        <span class="label">why we built this</span>
-      </div>
-      <h2 class="section__head">A tool that does <span class="accent">almost nothing</span><span class="period">.</span></h2>
-    </div>
-
-    <div class="essay" data-reveal data-reveal-delay="1">
-      <p>
-        Most photo apps want to be everything. Filters, stickers, AI skies, AI bodies, AI memories. They want to make your photos into something else.
-      </p>
-      <p>
-        Then &amp; Now does <strong>almost nothing</strong>. You pick two to four photos from your camera roll. You put them next to each other. You drag a slider to compare. If you want the app to straighten the horizon and line up the subject, you tap a button. If you'd rather do it yourself, you do it yourself.
-      </p>
-      <p>
-        We made this because the before-and-after moment — the fitness check at month three, the renovation reveal, the haircut that finally grew out — is one of the few genuinely private stories a phone holds. We didn't want to be the company that quietly uploaded it to a model-training set. So we built an app that <em>cannot</em> do that. There is no upload. There is no server. There is no account. There is no analytics SDK. There is only a folder on your phone that holds your photos.
-      </p>
-      <p>
-        That's the whole pitch. If it sounds like a tool that respects you, it's because that's the only kind of tool we wanted to make.
-      </p>
-
-      <div class="essay__sign">
-        <span class="name">— chengnan &amp; the Then &amp; Now team</span><br>
-        somewhere, 2026
-      </div>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 02 — DEMO · auto-align interactive
-       ───────────────────────────────────────────────── -->
-  <section class="section" id="demo">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 02</span>
-        <span class="label">the killer feature</span>
-      </div>
-      <h2 class="section__head">Tap once. Subjects align<span class="period">.</span></h2>
-    </div>
-
-    <p class="section__head" style="font-size: var(--text-md); max-width: 56ch; color: var(--color-ink-2); font-weight: 400; line-height: var(--leading-relaxed); letter-spacing: 0; margin-top: -1.5rem;" data-reveal data-reveal-delay="1">
-      Most comparison apps force auto-align on you. We don't. You see the photos as you shot them. Then, when you're ready, one tap straightens horizons and lines up the subject in every cell — without erasing any manual nudges you've already made.
-    </p>
-
-    <div class="demo" data-reveal data-reveal-delay="2">
-      <div class="demo__label">
-        <span>live demo · drag the handle</span>
-      </div>
-
-      <h3 class="demo__title">
-        Compare <span class="accent">before</span> and <span class="accent">after</span>, frame by frame.
-      </h3>
-      <p class="demo__desc">
-        The handle below is interactive. Drag it left or right to wipe between the two photos. In the app, this is the exact same gesture you use on your phone — touch, drag, release.
-      </p>
-
-      <div class="wipe" id="wipe" role="img" aria-label="Interactive before/after slider. Drag horizontally to reveal the after photo.">
-        <div class="wipe__layer wipe__layer--before" style="background-image: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&h=560&fit=crop&crop=faces'); background-color: oklch(70% 0.05 35);"></div>
-        <div class="wipe__layer wipe__layer--after" style="background-image: url('https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&h=560&fit=crop&crop=faces'); background-color: oklch(85% 0.04 80);"></div>
-        <div class="wipe__label wipe__label--before">before</div>
-        <div class="wipe__label wipe__label--after">after</div>
-        <div class="wipe__handle">
-          <div class="wipe__handle-knob">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/><polyline points="9 18 3 12 9 6" transform="translate(8 0)"/></svg>
+      <div class="hero__visual" data-reveal data-reveal-delay="1">
+        <div class="visual-note visual-note--top"><span data-i18n="hero.note">Before / After</span><span>01</span></div>
+        <div class="comparison comparison--hero" data-comparison data-mode="wipe" style="--position: 50%;" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-i18n-aria-label="a11y.compare" aria-label="Before and after photo comparison">
+          <img class="comparison__image" src="assets/compare-after.jpg" width="666" height="1000" alt="" fetchpriority="high">
+          <div class="comparison__before">
+            <img class="comparison__image" src="assets/compare-before.jpg" width="666" height="1000" alt="" fetchpriority="high">
           </div>
+          <span class="comparison__label comparison__label--before" data-i18n="compare.before">Before</span>
+          <span class="comparison__label comparison__label--after" data-i18n="compare.after">After</span>
+          <div class="comparison__divider" aria-hidden="true"><span class="comparison__knob">↔</span></div>
         </div>
+        <div class="visual-note visual-note--bottom"><span data-i18n="compare.hint">Drag the divider to compare</span><span data-i18n="hero.demo">Demo photos</span></div>
+      </div>
+    </section>
+
+    <section class="scene-strip section-shell" aria-label="Use cases" data-reveal>
+      <span data-i18n="scenes.fitness">Fitness</span><i>·</i>
+      <span data-i18n="scenes.skin">Skincare</span><i>·</i>
+      <span data-i18n="scenes.home">Renovation</span><i>·</i>
+      <span data-i18n="scenes.growth">Growth</span><i>·</i>
+      <span data-i18n="scenes.anything">Anything that changes</span>
+    </section>
+
+    <section class="demo-section section-shell" id="demo">
+      <div class="section-heading" data-reveal>
+        <div class="chapter"><span>01</span><span data-i18n="demo.chapter">The signature gesture</span></div>
+        <h2 data-i18n="demo.title">One gesture. A different perspective.</h2>
+        <p data-i18n="demo.lede">Place moments side by side, wipe between them, or blend them together. You stay in control of the framing.</p>
       </div>
 
-      <div class="demo__toggle">
-        <button class="demo__btn" id="demoBtn" type="button">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.4 5.6L20 9l-4 4 1 6-5-3-5 3 1-6-4-4 5.6-1.4L12 2z"/></svg>
-          <span>Auto-align</span>
-        </button>
-        <div class="demo__hint">
-          <span class="dot" aria-hidden="true"></span>
-          <span>runs locally · never touches your manual edits</span>
+      <div class="demo-workbench" data-reveal>
+        <div class="mode-tabs" role="tablist" aria-label="Comparison mode">
+          <button type="button" role="tab" data-mode="side" aria-selected="false" data-i18n="demo.side">Side by side</button>
+          <button type="button" role="tab" data-mode="wipe" aria-selected="true" data-i18n="demo.wipe">Slide</button>
+          <button type="button" role="tab" data-mode="overlay" aria-selected="false" data-i18n="demo.overlay">Overlay</button>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 03 — FEATURES · bento grid
-       ───────────────────────────────────────────────── -->
-  <section class="section" id="features">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 03</span>
-        <span class="label">six features</span>
-      </div>
-      <h2 class="section__head">Things other apps don't bother doing<span class="period">.</span></h2>
-    </div>
-
-    <p style="font-size: var(--text-md); color: var(--color-ink-2); max-width: 56ch; margin-top: -1.5rem; line-height: var(--leading-relaxed);" data-reveal data-reveal-delay="1">
-      Six features. No social feed. No AI face-blur. No "AI enhance". Just the small handful of things every comparison needs to look right.
-    </p>
-
-    <div class="bento">
-
-      <article class="bento__cell bento__cell--tall" data-reveal data-reveal-delay="1">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
-        </div>
-        <h3 class="bento__title">Auto-straighten, in batch<span class="period">.</span></h3>
-        <p class="bento__desc">Pull four photos of the same gym wall taken months apart and the app detects the floor line in each. All four rotate to match — in a single tap.</p>
-
-        <div class="bento__preview" aria-hidden="true">
-          <div class="bento__detail">preview · 4 cells, auto-rotated</div>
-          <div class="mini-strip">
-            <div class="mini-tile" style="background: linear-gradient(135deg, oklch(70% 0.05 35) 0%, oklch(75% 0.05 50) 100%);"></div>
-            <div class="mini-tile" style="background: linear-gradient(135deg, oklch(78% 0.05 40) 0%, oklch(82% 0.05 55) 100%);"></div>
-            <div class="mini-tile" style="background: linear-gradient(135deg, oklch(75% 0.05 45) 0%, oklch(80% 0.05 60) 100%);"></div>
-            <div class="mini-tile" style="background: linear-gradient(135deg, oklch(72% 0.05 50) 0%, oklch(78% 0.05 65) 100%);"></div>
-          </div>
-        </div>
-      </article>
-
-      <article class="bento__cell bento__cell--wide" data-reveal data-reveal-delay="2">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-        </div>
-        <h3 class="bento__title">Manual first<span class="period">.</span> Auto second.</h3>
-        <p class="bento__desc">Every cell opens exactly as you shot it — tilt, off-center subject, all of it. No invisible magic. The button labelled "Auto Compare" only runs when you tap it, and it preserves any position you've already set.</p>
-        <div class="bento__detail">invariant #1 · auto is opt-in, never default</div>
-      </article>
-
-      <article class="bento__cell bento__cell--half" data-reveal data-reveal-delay="1">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>
-        </div>
-        <h3 class="bento__title">Axis-locked drag<span class="period">.</span></h3>
-        <p class="bento__desc">Move a cell in 4-grid and the first direction you commit locks. Vertical-only alignment, horizontal-only nudge — whichever your gesture started with.</p>
-      </article>
-
-      <article class="bento__cell bento__cell--half" data-reveal data-reveal-delay="2">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
-        </div>
-        <h3 class="bento__title">Three ways to compare<span class="period">.</span></h3>
-        <p class="bento__desc">Arrange photos side by side, drag to wipe between them, or blend them with an overlay. No per-template paywall, no surprises.</p>
-      </article>
-
-      <article class="bento__cell bento__cell--wide" data-reveal data-reveal-delay="1">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
-        </div>
-        <h3 class="bento__title">Stamp. Just type anything<span class="period">.</span></h3>
-        <p class="bento__desc">No "X MONTHS" presets. No OCR of the EXIF. You tap the stamp slot and type whatever you want — emoji, date, quote, swear word. The app's job is to render what you wrote, not to decide what you meant.</p>
-        <div class="bento__detail">invariant #11 · stamp is fully manual, no smart defaults</div>
-      </article>
-
-      <article class="bento__cell bento__cell--half" data-reveal data-reveal-delay="2">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        </div>
-        <h3 class="bento__title">Export to PNG<span class="period">.</span></h3>
-        <p class="bento__desc">Export a clean 1:1 image. Save to Photos, share via AirDrop, post anywhere — the file is yours, with no watermark.</p>
-      </article>
-
-      <article class="bento__cell bento__cell--half" data-reveal data-reveal-delay="1">
-        <div class="bento__icon" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>
-        </div>
-        <h3 class="bento__title">Export to MP4<span class="period">.</span></h3>
-        <p class="bento__desc">A timelapse video of your cells animating from oldest to newest. Burned-in labels, on-device encoding, no upload step.</p>
-      </article>
-
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 04 — PERSONAS · 4 equal columns
-       ───────────────────────────────────────────────── -->
-  <section class="section" id="personas">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 04</span>
-        <span class="label">who uses it</span>
-      </div>
-      <h2 class="section__head">Four kinds of people. One app<span class="period">.</span></h2>
-    </div>
-
-    <div class="personas">
-
-      <article class="persona" data-reveal data-reveal-delay="1">
-        <div class="persona__glyph">01</div>
-        <h3 class="persona__name">Fitness check-in<span class="period">.</span></h3>
-        <div class="persona__scene">month 1 · month 3 · month 6</div>
-        <p class="persona__story">
-          Same mirror. Same lighting, ideally. Three months apart. Then &amp; Now lines up your silhouette across the cells so the comparison is about the body, not the framing.
-        </p>
-        <div class="persona__spec">2-4 photos · 4-grid · auto-align</div>
-      </article>
-
-      <article class="persona" data-reveal data-reveal-delay="2">
-        <div class="persona__glyph">02</div>
-        <h3 class="persona__name">Look of the day<span class="period">.</span></h3>
-        <div class="persona__scene">before makeup · after makeup</div>
-        <p class="persona__story">
-          Two photos. The wipe slider does the work. Drag it to feel the difference. Stamp whatever you want — "DAY 1", a 💄, the date — the app stays out of the way.
-        </p>
-        <div class="persona__spec">2 photos · wipe mode · manual stamp</div>
-      </article>
-
-      <article class="persona" data-reveal data-reveal-delay="3">
-        <div class="persona__glyph">03</div>
-        <h3 class="persona__name">Renovation reveal<span class="period">.</span></h3>
-        <div class="persona__scene">before demo · after paint</div>
-        <p class="persona__story">
-          The hallway before you tore out the carpet. The hallway after. Auto-straighten handles the fact that you took the first photo crouching and the second standing.
-        </p>
-        <div class="persona__spec">2 photos · side-by-side · auto-straighten</div>
-      </article>
-
-      <article class="persona" data-reveal data-reveal-delay="4">
-        <div class="persona__glyph">04</div>
-        <h3 class="persona__name">Growth diary<span class="period">.</span></h3>
-        <div class="persona__scene">jan · apr · aug · dec</div>
-        <p class="persona__story">
-          A plant. A puppy. A sourdough starter. Twelve months of photos you forgot you took, now arranged in a 4-grid you can scroll forever. The timeline MP4 makes it shareable.
-        </p>
-        <div class="persona__spec">4 photos · 4-grid · MP4 export</div>
-      </article>
-
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 05 — PRIVACY · 5 iron rules
-       ───────────────────────────────────────────────── -->
-  <section class="section" id="privacy">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 05</span>
-        <span class="label">privacy</span>
-      </div>
-      <h2 class="section__head">Five iron rules. <span class="accent">No exceptions</span><span class="period">.</span></h2>
-    </div>
-
-    <div class="privacy" data-reveal data-reveal-delay="1">
-      <div class="privacy__essay">
-        <p style="font-size: var(--text-md); line-height: var(--leading-relaxed); color: var(--color-ink-2); margin-bottom: var(--space-5);">
-          Privacy in Then &amp; Now isn't a setting. It's an architecture. There are five rules that the codebase enforces, and we won't ship a build that breaks any of them.
-        </p>
-      </div>
-
-      <div class="privacy__rules">
-
-        <div class="privacy__rule">
-          <div class="privacy__rule-num">Rule 01</div>
-          <div>
-            <h3 class="privacy__rule-title">No developer-run server.</h3>
-            <p class="privacy__rule-desc">Your photos are never uploaded, and there is no analytics SDK, Firebase, or crash reporter. The app communicates with the App Store through Apple StoreKit only to retrieve Pro product information and purchase entitlements; payment details are handled by Apple.</p>
-          </div>
-        </div>
-
-        <div class="privacy__rule">
-          <div class="privacy__rule-num">Rule 02</div>
-          <div>
-            <h3 class="privacy__rule-title">No iCloud sync.</h3>
-            <p class="privacy__rule-desc">Your comparisons live in <code style="font-family: var(--font-mono); background: var(--color-paper-3); padding: 1px 5px; border-radius: 3px; font-size: 0.9em;">Documents/Photos/</code> on the device. There is no iCloud Key-Value, no CloudKit container, no SyncEngine. Deleting the app deletes every byte.</p>
-          </div>
-        </div>
-
-        <div class="privacy__rule">
-          <div class="privacy__rule-num">Rule 03</div>
-          <div>
-            <h3 class="privacy__rule-title">No analytics.</h3>
-            <p class="privacy__rule-desc">No event tracking, no screen-time metric, no A/B test. We don't know which features you use. Apple's required <code style="font-family: var(--font-mono); background: var(--color-paper-3); padding: 1px 5px; border-radius: 3px; font-size: 0.9em;">PrivacyInfo.xcprivacy</code> declares zero collected data types and only the UserDefaults API reason (CA92.1).</p>
-          </div>
-        </div>
-
-        <div class="privacy__rule">
-          <div class="privacy__rule-num">Rule 04</div>
-          <div>
-            <h3 class="privacy__rule-title">No account.</h3>
-            <p class="privacy__rule-desc">There is no Sign in with Apple, no email, no password. Open the app, use it. The only way we know who you are is that you're holding the phone.</p>
-          </div>
-        </div>
-
-        <div class="privacy__rule">
-          <div class="privacy__rule-num">Rule 05</div>
-          <div>
-            <h3 class="privacy__rule-title">All processing on-device.</h3>
-            <p class="privacy__rule-desc">Vision (subject detection, horizon), Core Image (straighten, crop), AVFoundation (timelapse encoding) — every line runs locally. The phone's GPU does the work, not someone else's server.</p>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 06 — USE CASES · 5 scenarios
-       ───────────────────────────────────────────────── -->
-  <section class="section" id="usecases">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 06</span>
-        <span class="label">use cases</span>
-      </div>
-      <h2 class="section__head">Where this earns its keep<span class="period">.</span></h2>
-    </div>
-
-    <div class="usecases">
-
-      <div class="usecase" data-reveal>
-        <div class="usecase__id">/01</div>
-        <div class="usecase__scene">Six-month <em>strength</em> check at the same gym wall.</div>
-        <div class="usecase__spec">2-4 photos · 4-grid · auto-align</div>
-      </div>
-
-      <div class="usecase" data-reveal>
-        <div class="usecase__id">/02</div>
-        <div class="usecase__scene">Skincare <em>progress</em> shots in the same bathroom light.</div>
-        <div class="usecase__spec">2 photos · wipe mode · manual stamp</div>
-      </div>
-
-      <div class="usecase" data-reveal>
-        <div class="usecase__id">/03</div>
-        <div class="usecase__scene">Kitchen <em>before</em> demo · kitchen <em>after</em> tile work.</div>
-        <div class="usecase__spec">2 photos · side-by-side · auto-straighten</div>
-      </div>
-
-      <div class="usecase" data-reveal>
-        <div class="usecase__id">/04</div>
-        <div class="usecase__scene">Puppy <em>growth</em> — twelve months, four anchor photos.</div>
-        <div class="usecase__spec">4 photos · 4-grid · MP4 timeline</div>
-      </div>
-
-      <div class="usecase" data-reveal>
-        <div class="usecase__id">/05</div>
-        <div class="usecase__scene">Plant <em>leaf-by-leaf</em> diary across seasons.</div>
-        <div class="usecase__spec">3-4 photos · 4-grid · PNG export</div>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 07 — HOW IT WORKS · 3 steps
-       ───────────────────────────────────────────────── -->
-  <section class="section" id="how">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 07</span>
-        <span class="label">how it works</span>
-      </div>
-      <h2 class="section__head">Three taps. That's the whole flow<span class="period">.</span></h2>
-    </div>
-
-    <div class="how">
-
-      <div class="step" data-reveal data-reveal-delay="1">
-        <div class="step__num">step /01</div>
-
-        <div class="step__phone" aria-hidden="true">
-          <div class="step__phone-screen">
-            <div class="step__phone-island"></div>
-            <div class="step__phone-content">
-              <div class="step__phone-eyebrow">~/compose</div>
-              <div class="step__phone-title">Pick 2 to 4 photos<span class="period">.</span></div>
-              <div class="step__phone-strip">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div class="step__phone-strip">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div class="step__phone-bar">+ Pick from Photos</div>
+        <div class="demo-canvas">
+          <div class="comparison comparison--demo" data-comparison data-mode="wipe" style="--position: 50%; --overlay-opacity: .5;" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-i18n-aria-label="a11y.compare" aria-label="Before and after photo comparison">
+            <img class="comparison__image" src="assets/compare-after.jpg" width="666" height="1000" alt="" loading="lazy">
+            <div class="comparison__before">
+              <img class="comparison__image" src="assets/compare-before.jpg" width="666" height="1000" alt="" loading="lazy">
             </div>
+            <span class="comparison__label comparison__label--before" data-i18n="compare.before">Before</span>
+            <span class="comparison__label comparison__label--after" data-i18n="compare.after">After</span>
+            <div class="comparison__divider" aria-hidden="true"><span class="comparison__knob">↔</span></div>
+          </div>
+          <div class="overlay-control" hidden>
+            <label for="overlayRange" data-i18n="demo.opacity">After opacity</label>
+            <input id="overlayRange" type="range" min="0" max="100" value="50">
+            <output for="overlayRange" id="overlayValue">50%</output>
           </div>
         </div>
-
-        <h3 class="step__label">Pick the photos<span class="period">.</span></h3>
-        <p class="step__desc">
-          The Photos picker opens. You pick two to four. We read the file paths, copy the bytes to a local folder, and never see your library again.
-        </p>
+        <div class="workbench-note">
+          <span class="note-number">↳</span>
+          <p><strong data-i18n="demo.noteTitle">Automatic when you ask. Manual when you want.</strong><br><span data-i18n="demo.note">Auto-align runs only when you tap it, and never overwrites your manual adjustments.</span></p>
+        </div>
       </div>
+    </section>
 
-      <div class="step" data-reveal data-reveal-delay="2">
-        <div class="step__num">step /02</div>
-
-        <div class="step__phone" aria-hidden="true">
-          <div class="step__phone-screen">
-            <div class="step__phone-island"></div>
-            <div class="step__phone-content">
-              <div class="step__phone-eyebrow">~/compare</div>
-              <div class="step__phone-title">Wipe to compare<span class="period">.</span></div>
-              <div class="step__phone-thumb step__phone-thumb--wipe"></div>
-              <div class="step__phone-strip">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-              <div class="step__phone-bar">side · wipe · overlay</div>
-            </div>
+    <section class="product-section" id="features">
+      <div class="section-shell product-layout">
+        <div class="product-copy" data-reveal>
+          <div class="chapter"><span>02</span><span data-i18n="product.chapter">Inside the app</span></div>
+          <h2 data-i18n="product.title">Small on ceremony. Big on the details.</h2>
+          <p data-i18n="product.lede">A focused set of tools for capturing, comparing, and sharing change — without turning your photos into a cloud service.</p>
+          <div class="shot-tabs" role="tablist" aria-label="App screens">
+            <button type="button" role="tab" data-shot="slider" aria-selected="true"><span>01</span><span data-i18n="shots.slider">Slide to compare</span><span aria-hidden="true">↗</span></button>
+            <button type="button" role="tab" data-shot="overlay" aria-selected="false"><span>02</span><span data-i18n="shots.overlay">Overlay the details</span><span aria-hidden="true">↗</span></button>
+            <button type="button" role="tab" data-shot="gallery" aria-selected="false"><span>03</span><span data-i18n="shots.gallery">Keep every chapter</span><span aria-hidden="true">↗</span></button>
+            <button type="button" role="tab" data-shot="timelapse" aria-selected="false"><span>04</span><span data-i18n="shots.timelapse">Export the journey</span><span aria-hidden="true">↗</span></button>
           </div>
+          <p class="shot-description" id="shotDescription" data-i18n="shots.sliderDesc">A fluid divider makes subtle changes easy to see. Real interface, no mockup.</p>
         </div>
-
-        <h3 class="step__label">Compare three ways<span class="period">.</span></h3>
-        <p class="step__desc">
-          Pick a layout. Side-by-side for the steady reveal. Wipe for the slider. Overlay for the dissolve. All three are one tap to switch.
-        </p>
-      </div>
-
-      <div class="step" data-reveal data-reveal-delay="3">
-        <div class="step__num">step /03</div>
-
-        <div class="step__phone" aria-hidden="true">
-          <div class="step__phone-screen">
-            <div class="step__phone-island"></div>
-            <div class="step__phone-content">
-              <div class="step__phone-eyebrow">~/export</div>
-              <div class="step__phone-title">Save or share<span class="period">.</span></div>
-              <div class="step__phone-thumb step__phone-thumb--grid"></div>
-              <div class="step__phone-strip">
-                <div></div>
-                <div></div>
-              </div>
-              <div class="step__phone-bar">Save to Photos · Share</div>
-            </div>
+        <div class="product-device" data-reveal data-reveal-delay="1">
+          <div class="device-orbit" aria-hidden="true"><span>THEN</span><span>NOW</span></div>
+          <div class="phone-frame">
+            <img id="productShot" src="assets/app-slider.jpg" width="552" height="1200" data-i18n-alt="shots.sliderAlt" alt="Then & Now slide comparison screen">
           </div>
-        </div>
-
-        <h3 class="step__label">Save or share<span class="period">.</span></h3>
-        <p class="step__desc">
-          Hit Export. The PNG renders into your Photos library, no watermark. Or AirDrop it. Or post it. The file is yours.
-        </p>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 08 — FAQ · accordion
-       ───────────────────────────────────────────────── -->
-  <section class="section section--narrow" id="faq">
-    <div class="section__chapter" data-reveal>
-      <div class="section__num">
-        <span>§ 08</span>
-        <span class="label">questions</span>
-      </div>
-      <h2 class="section__head">Things people ask before downloading<span class="period">.</span></h2>
-    </div>
-
-    <div class="faq" data-reveal data-reveal-delay="1">
-
-      <details class="faq__item">
-        <summary class="faq__q">
-          <span>Is Then &amp; Now actually free?</span>
-          <span class="faq__q-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </summary>
-        <div class="faq__a">
-          Core comparison features and PNG export are free, with no ads or subscription. Free video export includes 3 exports per month with a Then &amp; Now brand watermark. Pro is a one-time purchase that unlocks unlimited video exports, removes the brand watermark, and enables custom logo upload.
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary class="faq__q">
-          <span>What does auto-align actually do?</span>
-          <span class="faq__q-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </summary>
-        <div class="faq__a">
-          Two passes, both on-device. First, Vision detects the horizon in each photo and rotates the cell to match. Second, Vision finds the most salient subject (usually a person or a face) and shifts each cell so the subject's centre sits on the same line. The result is a comparison where the framing is consistent.
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary class="faq__q">
-          <span>What if I've already moved cells by hand?</span>
-          <span class="faq__q-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </summary>
-        <div class="faq__a">
-          Auto-align treats manual placement as authoritative. It only nudges cells you've left at default position. If you'd rather start fresh, the toolbar has a Reset button that reverts every cell to default before auto-align runs.
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary class="faq__q">
-          <span>What happens if I delete the app?</span>
-          <span class="faq__q-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </summary>
-        <div class="faq__a">
-          Everything. The SwiftData store and the Documents/Photos folder are scoped to the app's container. Uninstall the app and the OS removes the container; there's no server holding a backup because there is no server.
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary class="faq__q">
-          <span>Which iOS versions are supported?</span>
-          <span class="faq__q-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </summary>
-        <div class="faq__a">
-          iOS 17 and later. The minimum is set by SwiftData and the modern Vision APIs the auto-align pipeline uses. iPad runs the iPhone build unchanged.
-        </div>
-      </details>
-
-      <details class="faq__item">
-        <summary class="faq__q">
-          <span>Why no Android?</span>
-          <span class="faq__q-icon" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          </span>
-        </summary>
-        <div class="faq__a">
-          Two reasons. First, the auto-align pipeline relies heavily on Apple's Vision and AVFoundation stacks, which would need to be rewritten on Android. Second, we want to ship a small, finished thing rather than a sprawling unfinished thing. If Android demand is sustained after launch, we'll revisit.
-        </div>
-      </details>
-
-    </div>
-  </section>
-
-  <div class="divider" aria-hidden="true"></div>
-
-  <!-- ─────────────────────────────────────────────────
-       § 09 — CTA
-       ───────────────────────────────────────────────── -->
-  <section class="section section--narrow" id="download">
-    <div class="cta" data-reveal>
-      <div class="cta__inner">
-        <div class="cta__eyebrow">coming soon on the app store</div>
-        <h2 class="cta__title">Get Then &amp; Now<span class="period">.</span></h2>
-        <p class="cta__sub">
-          Core features free. No accounts. No tracking. Just a tool for the moments worth comparing — and the discipline to leave them on your phone.
-        </p>
-
-        <div class="cta__buttons">
-          <span class="cta__btn cta__btn--accent">
-            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
-            App Store · coming soon
-          </span>
-        </div>
-
-        <div class="cta__meta">
-          <span>requires ios 17+</span>
-          <span>·</span>
-          <span>core features work offline</span>
+          <span class="device-caption" data-i18n="product.caption">Actual app screens · iPhone</span>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ─────────────────────────────────────────────────
-       § 10 — FOOTER · Ft5 statement
-       ───────────────────────────────────────────────── -->
-  <footer class="footer" role="contentinfo">
-    <p class="footer__statement" data-reveal>
-      A small <span class="accent">tool</span> for the moments that <span class="accent">deserve</span> a careful look<span class="period">.</span>
-    </p>
-
-    <div class="footer__row">
-      <div class="footer__col">
-        <h4>Product</h4>
-        <a href="#features">Features</a>
-        <a href="#demo">Auto-align demo</a>
-        <a href="#how">How it works</a>
-        <a href="#faq">FAQ</a>
+    <section class="feature-grid-section section-shell">
+      <div class="section-heading section-heading--split" data-reveal>
+        <div>
+          <div class="chapter"><span>03</span><span data-i18n="features.chapter">Made for the whole journey</span></div>
+          <h2 data-i18n="features.title">From the next shot to the final share.</h2>
+        </div>
+        <p data-i18n="features.lede">No social feed. No unnecessary account. Just the tools that make a comparison useful.</p>
       </div>
-
-      <div class="footer__col">
-        <h4>Trust</h4>
-        <a href="#privacy">Privacy promise</a>
-        <a href="/thenandnow/privacy.html">Full privacy policy</a>
-        <a href="#download">App Store</a>
-        <a href="/thenandnow/support.html">Contact</a>
+      <div class="feature-grid">
+        <article class="feature-card feature-card--wide" data-reveal>
+          <span class="feature-card__number">01 / CAMERA</span>
+          <h3 data-i18n="features.ghostTitle">Retake from the same spot.</h3>
+          <p data-i18n="features.ghostDesc">A translucent ghost of your original photo sits in the viewfinder, helping the “after” land at the same angle.</p>
+          <span class="feature-card__tag" data-i18n="features.ghostTag">Ghost camera</span>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__number">02 / ALIGN</span>
+          <h3 data-i18n="features.alignTitle">Line up the moment.</h3>
+          <p data-i18n="features.alignDesc">On-device subject and horizon alignment, only when you ask for it.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__number">03 / STITCH</span>
+          <h3 data-i18n="features.stitchTitle">Tell a longer story.</h3>
+          <p data-i18n="features.stitchDesc">Stitch 2–8 photos into one vertical or horizontal image.</p>
+        </article>
+        <article class="feature-card" data-reveal>
+          <span class="feature-card__number">04 / PNG</span>
+          <h3 data-i18n="features.pngTitle">A clean square export.</h3>
+          <p data-i18n="features.pngDesc">Save or share a 1:1 PNG with no watermark. Always free.</p>
+        </article>
+        <article class="feature-card feature-card--wide feature-card--pro" data-reveal>
+          <span class="feature-card__number">05 / VIDEO</span>
+          <h3 data-i18n="features.videoTitle">Watch change happen.</h3>
+          <p data-i18n="features.videoDesc">Export up to 1080p with custom labels and timing. Free includes 3 exports per month with a brand watermark. Pro is a one-time purchase for unlimited exports, no brand watermark, and custom logos.</p>
+          <span class="feature-card__tag" data-i18n="features.videoTag">No subscription</span>
+        </article>
       </div>
+    </section>
 
-      <div class="footer__col">
-        <h4>Reading</h4>
-        <a href="#why">Editor's letter</a>
-        <a href="#personas">Who uses it</a>
-        <a href="#usecases">Use cases</a>
+    <section class="privacy-section" id="privacy">
+      <div class="section-shell">
+        <div class="privacy-heading" data-reveal>
+          <div class="chapter chapter--light"><span>04</span><span data-i18n="privacy.chapter">Private by architecture</span></div>
+          <h2 data-i18n="privacy.title">Your memories are not our business model.</h2>
+          <p data-i18n="privacy.lede">Photo and video processing happens on your iPhone. Your photos never leave the device.</p>
+        </div>
+        <div class="privacy-rules" data-reveal>
+          <div><strong>01</strong><h3 data-i18n="privacy.rule1">No account</h3><p data-i18n="privacy.rule1Desc">No sign-up, email, or password.</p></div>
+          <div><strong>02</strong><h3 data-i18n="privacy.rule2">No tracking</h3><p data-i18n="privacy.rule2Desc">No ads, analytics SDK, or third-party tracker.</p></div>
+          <div><strong>03</strong><h3 data-i18n="privacy.rule3">No photo cloud</h3><p data-i18n="privacy.rule3Desc">No developer-run server holding your photos.</p></div>
+        </div>
+        <p class="privacy-footnote" data-i18n="privacy.footnote">Apple StoreKit is used only for Pro product information and purchase entitlements. Payments are handled by Apple; we never see your payment details.</p>
       </div>
-    </div>
+    </section>
 
-    <div class="footer__legal">
-      <span>© 2026 Then &amp; Now · made by hand, mostly on trains</span>
-      <span>built local · no analytics · no tracking</span>
+    <section class="faq-section section-shell" id="faq">
+      <div class="section-heading" data-reveal>
+        <div class="chapter"><span>05</span><span data-i18n="faq.chapter">Good to know</span></div>
+        <h2 data-i18n="faq.title">A few honest answers.</h2>
+      </div>
+      <div class="faq-list" data-reveal>
+        <details>
+          <summary data-i18n="faq.q1">What is free?</summary>
+          <p data-i18n="faq.a1">Core comparison features and PNG export are free, with no ads or subscription. Video export includes 3 free exports per month with a Then & Now brand watermark.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q2">What does Pro unlock?</summary>
+          <p data-i18n="faq.a2">A one-time Pro purchase unlocks unlimited video exports, removes the brand watermark, and enables custom logo upload. Restore Purchases is available in the app.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q3">Where are my photos stored?</summary>
+          <p data-i18n="faq.a3">In the app’s local container on your iPhone. There is no developer-run photo backup. Deleting the app removes its local data.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q4">Which devices are supported?</summary>
+          <p data-i18n="faq.a4">Then & Now requires iOS 17 or later. Version 1.0 is designed for iPhone.</p>
+        </details>
+        <details>
+          <summary data-i18n="faq.q5">Is an Android version coming?</summary>
+          <p data-i18n="faq.a5">Not yet. The current focus is a small, finished iPhone app. Android may be considered after launch.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="download-section section-shell" id="download" data-reveal>
+      <div class="download-card">
+        <div class="chapter chapter--light"><span>06</span><span data-i18n="download.chapter">Coming soon</span></div>
+        <h2 data-i18n="download.title">Keep the then. See the now.</h2>
+        <p data-i18n="download.lede">Then & Now is preparing for the App Store. Core features free, no account, no ads, no tracking.</p>
+        <span class="download-badge"><img src="assets/app-icon.png" width="48" height="48" alt=""><span><strong>Then &amp; Now</strong><small data-i18n="download.badge">Coming soon on the App Store</small></span></span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer section-shell">
+    <a class="brand" href="#top"><img src="assets/app-icon.png" width="32" height="32" alt="" class="brand__icon"><span>Then &amp; Now<span class="text-accent">.</span></span></a>
+    <div class="footer-links">
+      <a href="/thenandnow/privacy.html" data-i18n="footer.privacy">Privacy</a>
+      <a href="/thenandnow/support.html" data-i18n="footer.support">Support</a>
+      <a href="#faq">FAQ</a>
     </div>
+    <p><span>© 2026 Then &amp; Now</span><span data-i18n="footer.note">Made for moments worth comparing.</span></p>
   </footer>
-
 </body>
 </html>
