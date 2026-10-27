@@ -240,7 +240,7 @@ html[lang="zh-Hans"] .hero h1 { font-size: clamp(48px, 5.5vw, 80px); line-height
 .product-copy .shot-description { min-height: 54px; margin-top: 22px; font-size: var(--text-base); }
 .product-device { position: relative; display: grid; justify-items: center; padding: 40px 0 28px; }
 .phone-frame { position: relative; z-index: 2; width: min(100%, 330px); padding: 9px; border: 1px solid oklch(20% 0.005 60 / .7); border-radius: 48px; background: var(--color-paper-dark); box-shadow: 0 32px 70px -32px oklch(20% 0.005 60 / .36); }
-.phone-frame img { width: 100%; border-radius: 38px; background: var(--color-paper); }
+.phone-frame img { width: 100%; height: auto; border-radius: 38px; background: var(--color-paper); }
 .device-orbit { position: absolute; inset: 0; display: flex; align-items: center; justify-content: space-between; color: var(--color-paper-4); font-size: clamp(64px, 8vw, 112px); font-weight: 600; letter-spacing: -.08em; line-height: 1; }
 .device-orbit span:first-child { transform: translateX(-32%); }
 .device-orbit span:last-child { transform: translateX(32%); }
