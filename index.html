@@ -9,15 +9,15 @@
   <meta property="og:description" content="A private, beautifully simple way to compare moments on iPhone.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://pentaq0505.github.io/">
-  <meta property="og:image" content="https://pentaq0505.github.io/assets/app-icon.png">
-  <link rel="icon" type="image/png" href="assets/app-icon.png">
+  <meta property="og:image" content="https://pentaq0505.github.io/assets/app-icon.png?v=20261031">
+  <link rel="icon" type="image/png" href="assets/app-icon.png?v=20261031">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;650;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="assets/compare-before.jpg">
-  <link rel="preload" as="image" href="assets/compare-after.jpg">
-  <link rel="stylesheet" href="tokens.css?v=20261027">
-  <link rel="stylesheet" href="styles.css?v=20261027-2">
+  <link rel="preload" as="image" href="assets/compare-before.jpg?v=20261031?v=20261031">
+  <link rel="preload" as="image" href="assets/compare-after.jpg?v=20261031?v=20261031">
+  <link rel="stylesheet" href="tokens.css?v=20261031">
+  <link rel="stylesheet" href="styles.css?v=20261031">
   <script>
     try {
       window.__initialLocale = new URLSearchParams(location.search).get('lang') ||
@@ -26,7 +26,7 @@
       window.__initialLocale = navigator.language.startsWith('zh') ? 'zh-Hans' : 'en';
     }
   </script>
-  <script src="script.js?v=20261027" defer></script>
+  <script src="script.js?v=20261031" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main" data-i18n="a11y.skip">Skip to content</a>
@@ -34,7 +34,7 @@
   <header class="site-header">
     <div class="nav-shell">
       <a class="brand" href="#top" aria-label="Then & Now home">
-        <img src="assets/app-icon.png" width="40" height="40" alt="" class="brand__icon">
+        <img src="assets/app-icon-small.png?v=20261031" decoding="async" width="40" height="40" alt="" class="brand__icon">
         <span>Then &amp; Now<span class="text-accent">.</span></span>
       </a>
       <nav class="nav-links" aria-label="Primary">
@@ -75,9 +75,9 @@
       <div class="hero__visual" data-reveal data-reveal-delay="1">
         <div class="visual-note visual-note--top"><span data-i18n="hero.note">Before / After</span><span>01</span></div>
         <div class="comparison comparison--hero" data-comparison data-mode="wipe" style="--position: 50%;" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-i18n-aria-label="a11y.compare" aria-label="Before and after photo comparison">
-          <img class="comparison__image" src="assets/compare-after.jpg" width="666" height="1000" alt="" fetchpriority="high">
+          <img class="comparison__image" src="assets/compare-after.jpg?v=20261031" width="666" height="1000" alt="" fetchpriority="high">
           <div class="comparison__before">
-            <img class="comparison__image" src="assets/compare-before.jpg" width="666" height="1000" alt="" fetchpriority="high">
+            <img class="comparison__image" src="assets/compare-before.jpg?v=20261031" width="666" height="1000" alt="" fetchpriority="high">
           </div>
           <span class="comparison__label comparison__label--before" data-i18n="compare.before">Before</span>
           <span class="comparison__label comparison__label--after" data-i18n="compare.after">After</span>
@@ -104,15 +104,15 @@
 
       <div class="demo-workbench" data-reveal>
         <div class="mode-tabs" role="tablist" aria-label="Comparison mode">
-          <button type="button" role="tab" data-mode="side" aria-selected="false" data-i18n="demo.side">Side by side</button>
-          <button type="button" role="tab" data-mode="wipe" aria-selected="true" data-i18n="demo.wipe">Slide</button>
-          <button type="button" role="tab" data-mode="overlay" aria-selected="false" data-i18n="demo.overlay">Overlay</button>
+          <button id="modeTabSide" type="button" role="tab" data-mode="side" aria-controls="comparisonPanel" aria-selected="false" tabindex="-1" data-i18n="demo.side">Side by side</button>
+          <button id="modeTabWipe" type="button" role="tab" data-mode="wipe" aria-controls="comparisonPanel" aria-selected="true" data-i18n="demo.wipe">Slide</button>
+          <button id="modeTabOverlay" type="button" role="tab" data-mode="overlay" aria-controls="comparisonPanel" aria-selected="false" tabindex="-1" data-i18n="demo.overlay">Overlay</button>
         </div>
-        <div class="demo-canvas">
+        <div class="demo-canvas" id="comparisonPanel" role="tabpanel" aria-labelledby="modeTabWipe">
           <div class="comparison comparison--demo" data-comparison data-mode="wipe" style="--position: 50%; --overlay-opacity: .5;" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50" data-i18n-aria-label="a11y.compare" aria-label="Before and after photo comparison">
-            <img class="comparison__image" src="assets/compare-after.jpg" width="666" height="1000" alt="" loading="lazy">
+            <img class="comparison__image" src="assets/compare-after.jpg?v=20261031" width="666" height="1000" alt="" loading="lazy" decoding="async">
             <div class="comparison__before">
-              <img class="comparison__image" src="assets/compare-before.jpg" width="666" height="1000" alt="" loading="lazy">
+              <img class="comparison__image" src="assets/compare-before.jpg?v=20261031" width="666" height="1000" alt="" loading="lazy" decoding="async">
             </div>
             <span class="comparison__label comparison__label--before" data-i18n="compare.before">Before</span>
             <span class="comparison__label comparison__label--after" data-i18n="compare.after">After</span>
@@ -138,17 +138,17 @@
           <h2 data-i18n="product.title">Small on ceremony. Big on the details.</h2>
           <p data-i18n="product.lede">A focused set of tools for capturing, comparing, and sharing change — without turning your photos into a cloud service.</p>
           <div class="shot-tabs" role="tablist" aria-label="App screens">
-            <button type="button" role="tab" data-shot="slider" aria-selected="true"><span>01</span><span data-i18n="shots.slider">Slide to compare</span><span aria-hidden="true">↗</span></button>
-            <button type="button" role="tab" data-shot="overlay" aria-selected="false"><span>02</span><span data-i18n="shots.overlay">Overlay the details</span><span aria-hidden="true">↗</span></button>
-            <button type="button" role="tab" data-shot="gallery" aria-selected="false"><span>03</span><span data-i18n="shots.gallery">Keep every chapter</span><span aria-hidden="true">↗</span></button>
-            <button type="button" role="tab" data-shot="timelapse" aria-selected="false"><span>04</span><span data-i18n="shots.timelapse">Export the journey</span><span aria-hidden="true">↗</span></button>
+            <button id="shotTabSlider" type="button" role="tab" data-shot="slider" aria-controls="productPanel" aria-selected="true"><span>01</span><span data-i18n="shots.slider">Slide to compare</span><span aria-hidden="true">↗</span></button>
+            <button id="shotTabOverlay" type="button" role="tab" data-shot="overlay" aria-controls="productPanel" aria-selected="false" tabindex="-1"><span>02</span><span data-i18n="shots.overlay">Overlay the details</span><span aria-hidden="true">↗</span></button>
+            <button id="shotTabGallery" type="button" role="tab" data-shot="gallery" aria-controls="productPanel" aria-selected="false" tabindex="-1"><span>03</span><span data-i18n="shots.gallery">Keep every chapter</span><span aria-hidden="true">↗</span></button>
+            <button id="shotTabTimelapse" type="button" role="tab" data-shot="timelapse" aria-controls="productPanel" aria-selected="false" tabindex="-1"><span>04</span><span data-i18n="shots.timelapse">Export the journey</span><span aria-hidden="true">↗</span></button>
           </div>
-          <p class="shot-description" id="shotDescription" data-i18n="shots.sliderDesc">A fluid divider makes subtle changes easy to see. Real interface, no mockup.</p>
+          <p class="shot-description" id="shotDescription" aria-live="polite" data-i18n="shots.sliderDesc">A fluid divider makes subtle changes easy to see. Real interface, no mockup.</p>
         </div>
-        <div class="product-device" data-reveal data-reveal-delay="1">
+        <div class="product-device" id="productPanel" role="tabpanel" aria-labelledby="shotTabSlider" data-reveal data-reveal-delay="1">
           <div class="device-orbit" aria-hidden="true"><span>THEN</span><span>NOW</span></div>
           <div class="phone-frame">
-            <img id="productShot" src="assets/app-slider.jpg" width="552" height="1200" data-i18n-alt="shots.sliderAlt" alt="Then & Now slide comparison screen">
+            <img id="productShot" src="assets/app-slider.jpg?v=20261031" width="552" height="1200" loading="lazy" decoding="async" data-i18n-alt="shots.sliderAlt" alt="Then & Now slide comparison screen">
           </div>
           <span class="device-caption" data-i18n="product.caption">Actual app screens · iPhone</span>
         </div>
@@ -244,13 +244,13 @@
         <div class="chapter chapter--light"><span>06</span><span data-i18n="download.chapter">Coming soon</span></div>
         <h2 data-i18n="download.title">Keep the then. See the now.</h2>
         <p data-i18n="download.lede">Then & Now is preparing for the App Store. Core features free, no account, no ads, no tracking.</p>
-        <span class="download-badge"><img src="assets/app-icon.png" width="48" height="48" alt=""><span><strong>Then &amp; Now</strong><small data-i18n="download.badge">Coming soon on the App Store</small></span></span>
+        <span class="download-badge"><img src="assets/app-icon-small.png?v=20261031" decoding="async" width="48" height="48" alt=""><span><strong>Then &amp; Now</strong><small data-i18n="download.badge">Coming soon on the App Store</small></span></span>
       </div>
     </section>
   </main>
 
   <footer class="site-footer section-shell">
-    <a class="brand" href="#top"><img src="assets/app-icon.png" width="32" height="32" alt="" class="brand__icon"><span>Then &amp; Now<span class="text-accent">.</span></span></a>
+    <a class="brand" href="#top"><img src="assets/app-icon-small.png?v=20261031" decoding="async" width="32" height="32" alt="" class="brand__icon"><span>Then &amp; Now<span class="text-accent">.</span></span></a>
     <div class="footer-links">
       <a href="/thenandnow/privacy.html" data-i18n="footer.privacy">Privacy</a>
       <a href="/thenandnow/support.html" data-i18n="footer.support">Support</a>

@@ -3,7 +3,31 @@
 
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const easeOut = 'cubic-bezier(0.23, 1, 0.32, 1)';
+  const ASSET_VERSION = '20261031';
+  const screenshotUrl = (name) => `assets/app-${name}.jpg?v=${ASSET_VERSION}`;
   let locale = 'en';
+
+  function initImageResilience() {
+    const placeholder = `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(
+      '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800"><rect width="800" height="800" fill="#f5f0e8"/><path d="M360 190h80v420h-80z" fill="#cc785c" opacity=".18"/><text x="400" y="430" text-anchor="middle" fill="#6c6a64" font-family="system-ui,sans-serif" font-size="34">Then &amp; Now</text></svg>'
+    )}`;
+    document.querySelectorAll('img').forEach((img) => {
+      const handleError = () => {
+        if (img.dataset.fallback) return;
+        if (!img.dataset.retried) {
+          img.dataset.retried = 'true';
+          const url = new URL(img.getAttribute('src'), window.location.href);
+          url.searchParams.set('retry', Date.now().toString());
+          img.src = url.href;
+          return;
+        }
+        img.dataset.fallback = 'true';
+        img.src = placeholder;
+      };
+      img.addEventListener('error', handleError);
+      if (img.complete && img.naturalWidth === 0) handleError();
+    });
+  }
 
   const zh = {
     'a11y.skip': '跳到主要内容',
@@ -231,6 +255,7 @@
   const overlayControl = document.querySelector('.overlay-control');
   const overlayRange = document.getElementById('overlayRange');
   const overlayValue = document.getElementById('overlayValue');
+  const comparisonPanel = document.getElementById('comparisonPanel');
 
   function setDemoMode(mode) {
     if (!demo) return;
@@ -239,6 +264,7 @@
       const selected = button.dataset.mode === mode;
       button.setAttribute('aria-selected', String(selected));
       button.tabIndex = selected ? 0 : -1;
+      if (selected) comparisonPanel.setAttribute('aria-labelledby', button.id);
     });
     overlayControl.hidden = mode !== 'overlay';
     const interactive = mode === 'wipe';
@@ -278,12 +304,8 @@
   const productShot = document.getElementById('productShot');
   const shotDescription = document.getElementById('shotDescription');
   const shotTabs = [...document.querySelectorAll('.shot-tabs [data-shot]')];
+  const productPanel = document.getElementById('productPanel');
   let currentShot = 'slider';
-
-  Object.keys(shots).forEach((name) => {
-    const image = new Image();
-    image.src = `assets/app-${name}.jpg`;
-  });
 
   function setShot(name) {
     if (!shots[name]) return;
@@ -292,9 +314,12 @@
       const selected = button.dataset.shot === name;
       button.setAttribute('aria-selected', String(selected));
       button.tabIndex = selected ? 0 : -1;
+      if (selected) productPanel.setAttribute('aria-labelledby', button.id);
     });
     productShot.getAnimations().forEach((animation) => animation.cancel());
-    productShot.src = `assets/app-${name}.jpg`;
+    delete productShot.dataset.retried;
+    delete productShot.dataset.fallback;
+    productShot.src = screenshotUrl(name);
     productShot.dataset.i18nAlt = shots[name].alt;
     productShot.alt = messages[locale][shots[name].alt];
     shotDescription.dataset.i18n = shots[name].description;
@@ -337,6 +362,7 @@
     elements.forEach((el) => observer.observe(el));
   }
 
+  initImageResilience();
   applyLocale(storedLocale);
   setDemoMode('wipe');
   initReveals();
